@@ -3,7 +3,6 @@
 
 use super::*;
 
-use serde::{Deserialize, Serialize};
 
 const CREDITS_PATH: &str = "/credits";
 
