@@ -1,6 +1,7 @@
 pub mod credits;
 pub mod voices;
 pub mod images;
+pub mod audios;
 
 use std::{fs::File, io::{self, Read, Write}};
 pub use crate::client::*;
@@ -29,13 +30,13 @@ impl MultipartFormData {
         Ok(())
     }
 
-    pub fn add_file(&mut self, name: &str, path: &str) -> io::Result<()> {
+    pub fn add_file(&mut self, mime_type: &str, name: &str, path: &str) -> io::Result<()> {
         if !path.contains(".") {
             return Err(io::Error::new(io::ErrorKind::Other, "Invalid file path"));
         }
         write!(self.body, "--{}\r\n", self.boundary)?;
         write!(self.body, "Content-Disposition: form-data; name=\"{}\"; filename=\"{}\"\r\n", name, path)?;
-        write!(self.body, "Content-Type: image/{}\r\n\r\n", path.split_once(".").unwrap().1)?;
+        write!(self.body, "Content-Type: {}\r\n\r\n", mime_type)?;
         let mut file = File::open(path)?;
         file.read_to_end(&mut self.body)?;
         write!(self.body, "\r\n")?;

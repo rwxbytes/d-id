@@ -1,12 +1,11 @@
 use d_id::prelude::*;
-use http_body_util::Empty;
-use d_id::endpoints::resources::images::{delete_image, upload_image_by_file};
+use d_id::endpoints::resources::audios::{upload_audio_by_file, delete_audio};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    //let img = upload_image_by_file("img_test.jpg").await?;
-    //println!("{:?}", img.id);
-    let _resp = delete_image("img_kglq8EjZzQPv5ZPTVOWwJ").await?;
+    let aud = upload_audio_by_file("audio/mp3", "tyger_1.mp3").await?;
+    println!("{:?}", aud);
+    let _del = delete_audio(&aud.id).await?;
 
 
     Ok(())

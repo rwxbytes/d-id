@@ -17,8 +17,9 @@ pub struct ImageResponse {
 /// Storage duration: 24-48H
 // TODO: Cover all body params [https://docs.d-id.com/reference/upload-an-image]
 pub async fn upload_image_by_file(path: &str) -> Result<ImageResponse> {
+    let mime_subtype = path.split(".").last().ok_or("Invalid file path")?;
     let mut form = MultipartFormData::new();
-    form.add_file("image", path)?;
+    form.add_file(&format!("image/{}", mime_subtype), "image", path)?;
     form.end_body()?;
 
     let c = ClientBuilder::new()?
