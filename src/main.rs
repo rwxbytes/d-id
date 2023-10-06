@@ -1,14 +1,13 @@
-use bytes::Bytes;
-use d_id::client::ClientBuilder;
 use d_id::prelude::*;
 use http_body_util::Empty;
-use d_id::endpoints::resources::voices::get_voices;
+use d_id::endpoints::resources::images::{delete_image, upload_image_by_file};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let voices = get_voices().await?;
+    //let img = upload_image_by_file("img_test.jpg").await?;
+    //println!("{:?}", img.id);
+    let _resp = delete_image("img_kglq8EjZzQPv5ZPTVOWwJ").await?;
 
-    println!("{:#?}", voices);
 
     Ok(())
 }

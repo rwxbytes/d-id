@@ -5,14 +5,15 @@ use std::fmt;
 pub struct ApiResponseError {
     pub kind: String,
     pub description: String,
-    pub details: String,
+    pub details: Option<String>,
 }
 
+// Todo: Handle details - [Celeberity Decetion error is not handled]
 impl fmt::Display for ApiResponseError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
-            "kind: {}, description: {}, details: {}",
+            "kind: {}, description: {}, details: {:?}",
             self.kind, self.description, self.details
         )
     }
@@ -23,5 +24,5 @@ pub enum Error {
     #[error("Client build error: {0}")]
     ClientBuildError(String),
     #[error("{:?}", .0)]
-    ClientSendRequestError(ApiResponseError),
+    ClientSendRequestError(serde_json::Value),
 }

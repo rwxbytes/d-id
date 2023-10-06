@@ -69,7 +69,7 @@ impl Client {
 
         let mut res = sender.send_request(req).await?;
 
-        if res.status() != 200 {
+        if res.status().is_client_error() {
             let w = Vec::new();
             let mut writer = BufWriter::new(w);
             while let Some(resulting_frame) = res.frame().await {
@@ -80,7 +80,8 @@ impl Client {
                 writer.flush().await?;
             }
 
-            let err_value = serde_json::from_slice::<ApiResponseError>(&writer.into_inner())?;
+            //let err_value = serde_json::from_slice::<ApiResponseError>(&writer.into_inner())?;
+            let err_value = serde_json::from_slice::<serde_json::Value>(&writer.into_inner())?;
 
             return Err(Box::new(Error::ClientSendRequestError(err_value)));
         }

@@ -8,3 +8,5 @@ pub const ACCEPT: &str = "accept";
 pub const APPLICATION_JSON: &str = "application/json";
 pub const CONTENT_TYPE: &str = "Content-Type";
 pub const IMAGE_PNG: &str = "image/png";
+
+pub const MULTIPART_FORM_DATA_BOUNDARY: &str = "multipart/form-data; boundary=";
