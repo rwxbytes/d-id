@@ -2,6 +2,7 @@ pub mod credits;
 pub mod voices;
 pub mod images;
 pub mod audios;
+pub mod settings;
 
 use std::{fs::File, io::{self, Read, Write}};
 pub use crate::client::*;

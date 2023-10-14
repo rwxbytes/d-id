@@ -1,2 +1,2 @@
 pub mod resources;
-mod video;
+pub mod video;
