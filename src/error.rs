@@ -33,4 +33,6 @@ pub enum RequestBodyBuildError {
     SourceUrlNotSet,
     #[error("script must be set")]
     ScriptNotSet,
+    #[error("presenter id must be set")]
+    PresenterIdNotSet,
 }

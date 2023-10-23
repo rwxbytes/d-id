@@ -1,4 +1,5 @@
 pub mod talks;
+pub mod clips;
 
 pub use crate::client::*;
 pub use crate::prelude::*;
@@ -11,7 +12,6 @@ pub enum Script {
      Text {
         r#type: String,
         subtitles: bool,
-        //#[serde(skip_serializing_if = "TTSProvider::is_dispensable")]
         provider: Option<TTSProvider>,
         input: String,
         ssml: bool,
@@ -77,17 +77,9 @@ pub enum Driver {
     SubtleDriver03,
     #[serde(rename = "bank://subtle/driver-04")]
     SubtleDriver04,
-    //None,
 }
 
-//impl Driver {
-//    pub fn is_none(&self) -> bool {
-//        match self {
-//            Driver::None => true,
-//            _ => false,
-//        }
-//    }
-//}
+
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {

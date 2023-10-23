@@ -112,9 +112,9 @@ impl TalkRequestBody {
 
         let resp = c.send_request(Full::<Bytes>::new(serde_json::to_string(&self)?.into())).await?;
 
-        let json = serde_json::from_slice::<CreateTalkResponse>(&resp.as_ref())?;
+        let talk_resp= serde_json::from_slice::<CreateTalkResponse>(&resp.as_ref())?;
 
-        Ok(json)
+        Ok(talk_resp)
     }
 
 
@@ -202,7 +202,7 @@ pub struct TalkRequestBodyBuilder {
 }
 
 impl TalkRequestBodyBuilder {
-    pub fn with_text_script() -> Result<Self> {
+    pub fn with_text_script() -> Self {
         let script = Script::Text {
             r#type: "text".to_string(),
             subtitles: false,
@@ -214,7 +214,7 @@ impl TalkRequestBodyBuilder {
             ssml: false,
         };
 
-        Ok(Self {
+        Self {
             source_url: None,
             driver_url: None,
             script: Some(script),
@@ -225,10 +225,10 @@ impl TalkRequestBodyBuilder {
             result_url: None,
             face: None,
             persist: None,
-        })
+        }
     }
 
-    pub fn with_audio_script() -> Result<Self> {
+    pub fn with_audio_script() -> Self {
         let script = Script::Audio {
             r#type: "audio".to_string(),
             subtitles: false,
@@ -236,7 +236,7 @@ impl TalkRequestBodyBuilder {
             reduce_noise: false,
         };
 
-        Ok(Self {
+        Self {
             source_url: None,
             driver_url: None,
             script: Some(script),
@@ -247,51 +247,51 @@ impl TalkRequestBodyBuilder {
             result_url: None,
             face: None,
             persist: None,
-        })
+        }
     }
     pub fn source_url(mut self, source_url: &str) -> Result<Self> {
         self.source_url = Some(source_url.to_string());
         Ok(self)
     }
 
-    fn audio_url(mut self, audio_url: &str) -> Result<Self> {
+    pub fn audio_url(mut self, audio_url: &str) -> Result<Self> {
         if let Some(Script::Audio { audio_url: a, .. }) = self.script.as_mut() {
             *a = audio_url.to_string();
         }
         Ok(self)
     }
 
-    fn driver_url(mut self, driver_url: Driver) -> Result<Self> {
+    pub fn driver_url(mut self, driver_url: Driver) -> Result<Self> {
         self.driver_url = Some(driver_url);
         Ok(self)
     }
 
-    fn script(mut self, script: Script) -> Result<Self> {
+    pub fn script(mut self, script: Script) -> Result<Self> {
         self.script = Some(script);
         Ok(self)
     }
 
-    fn user_data(mut self, user_data: &str) -> Result<Self> {
+    pub fn user_data(mut self, user_data: &str) -> Result<Self> {
         self.user_data = Some(user_data.to_string());
         Ok(self)
     }
 
-    fn name(mut self, name: &str) -> Result<Self> {
+    pub fn name(mut self, name: &str) -> Result<Self> {
         self.name = Some(name.to_string());
         Ok(self)
     }
 
-    fn webhook(mut self, webhook: &str) -> Result<Self> {
+    pub fn webhook(mut self, webhook: &str) -> Result<Self> {
         self.webhook = Some(webhook.to_string());
         Ok(self)
     }
 
-    fn result_url(mut self, result_url: &str) -> Result<Self> {
+    pub fn result_url(mut self, result_url: &str) -> Result<Self> {
         self.result_url = Some(result_url.to_string());
         Ok(self)
     }
 
-    fn persist(mut self, persist: bool) -> Result<Self> {
+    pub fn persist(mut self, persist: bool) -> Result<Self> {
         self.persist = Some(persist);
         Ok(self)
     }
@@ -303,38 +303,38 @@ impl TalkRequestBodyBuilder {
         Ok(self)
     }
 
-    fn ssml(mut self, ssml: bool) -> Result<Self> {
+    pub fn ssml(mut self, ssml: bool) -> Result<Self> {
         if let Some(Script::Text { ssml: s, .. }) = self.script.as_mut() {
             *s = ssml;
         }
         Ok(self)
     }
 
-    fn subtitles(mut self, subtitles: bool) -> Result<Self> {
+    pub fn subtitles(mut self, subtitles: bool) -> Result<Self> {
         if let Some(Script::Text { subtitles: s, .. }) = self.script.as_mut() {
             *s = subtitles;
         }
         Ok(self)
     }
 
-    fn provider(mut self, provider: TTSProvider) -> Result<Self> {
+    pub fn provider(mut self, provider: TTSProvider) -> Result<Self> {
         if let Some(Script::Text { provider: p, .. }) = self.script.as_mut() {
             *p = Some(provider);
         }
         Ok(self)
     }
 
-    fn face(mut self, face: Face) -> Result<Self> {
+   pub fn face(mut self, face: Face) -> Result<Self> {
         self.face = Some(face);
         Ok(self)
     }
 
-    fn config(mut self, config: Config) -> Result<Self> {
+    pub fn config(mut self, config: Config) -> Result<Self> {
         self.config = Some(config);
         Ok(self)
     }
 
-    fn reduce_noise(mut self, reduce_noise: bool) -> Result<Self> {
+    pub fn reduce_noise(mut self, reduce_noise: bool) -> Result<Self> {
         if let Some(Script::Audio { reduce_noise: r, .. }) = self.script.as_mut() {
             *r = reduce_noise;
         }
@@ -354,10 +354,10 @@ impl TalkRequestBodyBuilder {
                 driver_url: self.driver_url,
                 script,
                 config: self.config,
-                user_data: self.user_data.unwrap_or("".to_string()),
-                name: self.name.unwrap_or("".to_string()),
-                webhook: self.webhook.unwrap_or("".to_string()),
-                result_url: self.result_url.unwrap_or("".to_string()),
+                user_data: self.user_data.unwrap_or_default(),
+                name: self.name.unwrap_or_default(),
+                webhook: self.webhook.unwrap_or_default(),
+                result_url: self.result_url.unwrap_or_default(),
                 face: self.face,
                 persist: self.persist.unwrap_or(false),
             }
