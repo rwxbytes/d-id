@@ -1,9 +1,9 @@
 A lib crate for interacting with [D-ID's](https://docs.d-id.com/reference/get-started) Api
 
 
-| API            |Support|
-|----------------|---|
-| Live Streaming |❌|
+| API            | Support |
+|----------------|---------|
+| Live Streaming | ❌       |
 
 ## ⚙️ Requirements
 
