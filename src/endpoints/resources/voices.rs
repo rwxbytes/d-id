@@ -16,8 +16,7 @@ pub struct Voice {
     language: String,
     access: String,
     provider: String,
-    //#[serde(skip)]
-    //styles: Vec<String>,
+    //styles: Vec<Option<String>>,
 }
 
 pub async fn get_voices() -> Result<Voices> {

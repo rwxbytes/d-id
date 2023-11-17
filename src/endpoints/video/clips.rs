@@ -37,19 +37,19 @@ pub async fn get_presenters() -> Result<GetPresentersResponse> {
     Ok(presenters)
 }
 
-//pub async fn get_presenter(id: &str) -> Result<Presenter> {
-//    let c = ClientBuilder::new()?
-//        .method(GET)?
-//        .path(&format!("{}{}/{}", CLIPS_PATH, PRESENTERS_PATH, id))?
-//        .header(CONTENT_TYPE, APPLICATION_JSON)?
-//        .build()?;
-//
-//    let resp = c.send_request(Empty::<Bytes>::new()).await?;
-//
-//    let presenter = serde_json::from_slice::<Presenter>(&resp.as_ref())?;
-//
-//    Ok(presenter)
-//}
+pub async fn get_presenter(id: &str) -> Result<Presenter> {
+    let c = ClientBuilder::new()?
+        .method(GET)?
+        .path(&format!("{}{}/{}", CLIPS_PATH, PRESENTERS_PATH, id))?
+        .header(CONTENT_TYPE, APPLICATION_JSON)?
+        .build()?;
+
+    let resp = c.send_request(Empty::<Bytes>::new()).await?;
+
+    let presenter = serde_json::from_slice::<Presenter>(&resp.as_ref())?;
+
+    Ok(presenter)
+}
 
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -409,7 +409,6 @@ pub async fn delete_clip(id: &str) -> Result<()> {
         .header(CONTENT_TYPE, APPLICATION_JSON)?
         .build()?;
 
-    // TODO: Check response when premium: https://docs.d-id.com/reference/deleteclip
     let _resp = c.send_request(Empty::<Bytes>::new()).await?;
 
     Ok(())

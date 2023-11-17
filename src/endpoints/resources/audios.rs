@@ -17,7 +17,6 @@ pub struct AudioResponse {
 /// Storage duration: 24-48H
 /// The resulting file is stored as a .wav file in a 16kHz sample rate.
 /// The maximum file size is 6MB.
-// TODO: Cover all body params [https://docs.d-id.com/reference/upload-an-audio]
 pub async  fn upload_audio_by_file(mime_type: &str, path: &str) -> Result<AudioResponse> {
     let mut form = MultipartFormData::new();
     form.add_file(mime_type, "audio", path)?;
@@ -50,4 +49,3 @@ pub async fn delete_audio(id: &str) -> Result<()> {
     Ok(())
 }
 
-// TODO: Implement [https://docs.d-id.com/reference/upload-an-audio1]

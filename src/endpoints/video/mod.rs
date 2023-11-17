@@ -1,6 +1,7 @@
 pub mod talks;
 pub mod clips;
 pub mod animations;
+pub mod streams;
 
 pub use crate::client::*;
 pub use crate::prelude::*;
