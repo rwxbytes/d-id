@@ -1,10 +1,15 @@
 A lib crate for interacting with [D-ID's](https://docs.d-id.com/reference/get-started) Api
 
+
+| API            |Support|
+|----------------|---|
+| Live Streaming |❌|
+
 ## ⚙️ Requirements
 
 - Set API key as environment variable `D_ID_API_KEY`
 
-# 🗣️ Usage
+## 🗣️ Usage
 
 ## Talks
 
